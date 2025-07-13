@@ -3,7 +3,6 @@ import "flatpickr/dist/flatpickr.min.css";
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 let userSelectedDate
-const now = new Date();
 let chosenDate
 const startBtn = document.querySelector("[data-start]");
 const newDay = document.querySelector("[data-days]");
@@ -19,6 +18,7 @@ const options = {
     minuteIncrement: 1,
     onClose(selectedDates) {
         startBtn.disabled = true;
+        const now = new Date();
         chosenDate = new Date(selectedDates[0]);
         if (chosenDate < now) {
             startBtn.disabled = true;
@@ -31,30 +31,7 @@ const options = {
                 messageColor: "#fff",
             });
         } else {
-            newInput.disabled = true;
             startBtn.disabled = false;
-            userSelectedDate = convertMs(chosenDate.getTime() - now.getTime());
-            startBtn.addEventListener("click", () => {
-                startBtn.disabled = true;
-                let intervalId = setInterval(() => {
-                    const now = new Date();
-                    const diff = chosenDate.getTime() - now.getTime();
-            
-                    if (diff <= 0) {
-                    clearInterval(intervalId);
-                    newDay.textContent = "00";
-                    newHour.textContent = "00";
-                    newMinute.textContent = "00";
-                    newSecond.textContent = "00";
-                    return;
-                    }
-                    const newDiff = convertMs(diff)
-                    newDay.textContent = String(newDiff.days).padStart(2, "0");
-                    newHour.textContent = String(newDiff.hours).padStart(2, "0");
-                    newMinute.textContent = String(newDiff.minutes).padStart(2, "0");
-                    newSecond.textContent = String(newDiff.seconds).padStart(2, "0");
-                }, 1000);
-            });
         }
     },
 };
@@ -75,3 +52,24 @@ function convertMs(ms) {
     return { days, hours, minutes, seconds };
 }
 const fp = flatpickr("#datetime-picker", options);
+startBtn.addEventListener("click", () => {
+    newInput.disabled = true;
+    startBtn.disabled = true;
+    let intervalId = setInterval(() => {
+        const now = new Date();
+        const diff = chosenDate.getTime() - now.getTime();
+        if (diff <= 0) {
+        clearInterval(intervalId);
+        newDay.textContent = "00";
+        newHour.textContent = "00";
+        newMinute.textContent = "00";
+        newSecond.textContent = "00";
+        return;
+        }
+        const newDiff = convertMs(diff)
+        newDay.textContent = String(newDiff.days).padStart(2, "0");
+        newHour.textContent = String(newDiff.hours).padStart(2, "0");
+        newMinute.textContent = String(newDiff.minutes).padStart(2, "0");
+        newSecond.textContent = String(newDiff.seconds).padStart(2, "0");
+    }, 1000);
+});
