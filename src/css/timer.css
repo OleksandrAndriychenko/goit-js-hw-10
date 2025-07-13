@@ -1,0 +1,33 @@
+body {
+    font-family: "Montserrat", sans-serif;
+    color: #2e2f42;
+}
+a {
+    display: block;
+}
+#datetime-picker {
+    margin-left: 156px;
+    margin-top: 36px;
+    margin-bottom: 32px;
+    margin-right: 8px;
+}
+.timer {
+    margin-left: 156px;
+    display: flex;
+    gap: 24px;
+}
+.field {
+    display: flex;
+    flex-direction: column;
+}
+.value {
+    font-weight: 400;
+    font-size: 40px;
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+}
+.label {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.5;
+}
