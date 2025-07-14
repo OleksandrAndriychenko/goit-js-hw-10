@@ -64,6 +64,7 @@ startBtn.addEventListener("click", () => {
         newHour.textContent = "00";
         newMinute.textContent = "00";
         newSecond.textContent = "00";
+        newInput.disabled = false;
         return;
         }
         const newDiff = convertMs(diff)
